@@ -71,13 +71,14 @@
         <spotless-maven-plugin.version>2.44.4</spotless-maven-plugin.version>
         <spring.profiles.active>dev</spring.profiles.active>
         <springdoc-openapi-starter-webmvc-api.version>2.8.8</springdoc-openapi-starter-webmvc-api.version>
+        <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
     </properties>
 
     <dependencies>
       <dependency>
         <groupId>net.logstash.logback</groupId>
         <artifactId>logstash-logback-encoder</artifactId>
-        <version>7.4</version>
+        <version>${logstash-logback-encoder.version}</version>
       </dependency>
 
       <dependency>
@@ -608,7 +609,15 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>jhipsterelk:latest</image>
+                            <image>victoriatorresburgos:latest</image>
+                            <tags>
+                              <tag>${project.version}</tag>
+                              <tag>latest</tag>
+                            </tags>
+                            <auth>
+                              <username>${DOCKER_REGISTRY_USER}</username>
+                              <password>${DOCKER_REGISTRY_PWD}</password>
+                            </auth>
                         </to>
                         <container>
                             <entrypoint>
