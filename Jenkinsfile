@@ -43,3 +43,4 @@ node {
         sh "./mvnw -ntp -Pprod verify jib:build"
     }
 }
+}
