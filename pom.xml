@@ -609,7 +609,7 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>victoriatorresburgos:latest</image>
+                            <image>victoriatorresburgos/ing-software-aplicada:latest</image>
                             <tags>
                               <tag>${project.version}</tag>
                               <tag>latest</tag>
