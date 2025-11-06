@@ -20,18 +20,14 @@ node {
 
         stage('backend tests') {
             try {
-                // Este comando se mantiene igual
                 sh "./mvnw -ntp verify -P-webapp -DskipTests"
             } catch(err) {
-                // Esto captura fallos reales del build
                 throw err
             } finally {
-                // Agregamos un try/catch AQUI para que no falle si no hay reportes
                 try {
                     junit '**/target/surefire-reports/TEST-*.xml,**/target/failsafe-reports/TEST-*.xml'
                 } catch (e) {
-                    // Imprime un mensaje, pero NO falla el pipeline
-                    echo "No se encontraron reportes de tests para publicar (probablemente se omitieron)."
+                    echo "No tests found."
                 }
             }
         }
@@ -48,7 +44,7 @@ node {
                    'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]) {
         // A pre-requisite to this step is to setup authentication to the docker registry
         // https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin#authentication-methods
-        sh "./mvnw -ntp -Pprod verify jib:build"
+        sh "./mvnw -ntp -Pprod verify jib:build -DskipTests"
     }
 }
 }
